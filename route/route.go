@@ -182,7 +182,9 @@ func URL(w http.ResponseWriter, r *http.Request) {
 		controller.VerifyPasswordHandler(w, r)
 	case method == "POST" && path == "/auth/resend":
 		controller.ResendPasswordHandler(w, r)
-	// Google Auth
+		// Florka
+	case method == "POST" && path == "/data/pelanggan":
+		controller.PostDataPelanggan(w, r)
 	default:
 		controller.NotFound(w, r)
 	}
