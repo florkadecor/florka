@@ -189,6 +189,9 @@ func URL(w http.ResponseWriter, r *http.Request) {
 		controller.GetAllDataPelanggan(w, r)
 	case method == "GET" && path == "/data/pelanggan/one":
 		controller.GetOneDataPelanggan(w, r)
+
+	case method == "POST" && path == "/data/pengeluaran":
+		controller.PostDataPengeluaran(w, r)
 	default:
 		controller.NotFound(w, r)
 	}
