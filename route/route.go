@@ -185,6 +185,8 @@ func URL(w http.ResponseWriter, r *http.Request) {
 		// Florka
 	case method == "POST" && path == "/data/pelanggan":
 		controller.PostDataPelanggan(w, r)
+	case method == "GET" && path == "/data/pelanggan/all":
+		controller.GetAllDataPelanggan(w, r)
 	default:
 		controller.NotFound(w, r)
 	}
