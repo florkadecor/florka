@@ -118,7 +118,7 @@ func GetOneDataPelanggan(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		respn.Status = "Error : object ID tidak valid"
 		respn.Response = err.Error()
-		at.WriteJSON(w, http.StatusNotFound, respn)
+		at.WriteJSON(w, http.StatusPreconditionFailed, respn)
 		return
 	}
 	//get database
@@ -126,7 +126,7 @@ func GetOneDataPelanggan(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		respn.Status = "Error : gagal input database"
 		respn.Response = err.Error()
-		at.WriteJSON(w, http.StatusNotFound, respn)
+		at.WriteJSON(w, http.StatusExpectationFailed, respn)
 		return
 	}
 	at.WriteJSON(w, http.StatusOK, datapelanggan)
