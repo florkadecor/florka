@@ -113,19 +113,16 @@ func GetOneDataPelanggan(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Auth
-	// Parsing Body
-	var pelanggandata model.DataPelanggan
-	err = json.NewDecoder(r.Body).Decode(&pelanggandata)
+	// get param
+	objectId, err := primitive.ObjectIDFromHex(at.GetParam(r))
 	if err != nil {
-		respn.Status = "Error : Parsing data pelanggan gagal"
-		respn.Info = payload.Alias
-		respn.Location = payload.Id
+		respn.Status = "Error : object ID tidak valid"
 		respn.Response = err.Error()
 		at.WriteJSON(w, http.StatusNotFound, respn)
 		return
 	}
-	//input database
-	datapelanggan, err := atdb.GetOneDoc[model.DataPelanggan](config.Mongoconn, "pelanggan", primitive.M{"_id": pelanggandata.ID})
+	//get database
+	datapelanggan, err := atdb.GetOneDoc[model.DataPelanggan](config.Mongoconn, "pelanggan", primitive.M{"_id": objectId})
 	if err != nil {
 		respn.Status = "Error : gagal input database"
 		respn.Response = err.Error()

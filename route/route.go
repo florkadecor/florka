@@ -186,8 +186,8 @@ func URL(w http.ResponseWriter, r *http.Request) {
 	case method == "POST" && path == "/data/pelanggan":
 		controller.PostDataPelanggan(w, r)
 	case method == "GET" && path == "/data/pelanggan/all":
-		controller.GetAllDataPelanggan(w, r)
-	case method == "GET" && path == "/data/pelanggan/one":
+		controller.GetAllDataPelanggan(w, r) //
+	case method == "GET" && at.URLParam(path, "/data/pelanggan/one/:id"):
 		controller.GetOneDataPelanggan(w, r)
 
 	case method == "POST" && path == "/data/pengeluaran":
