@@ -90,3 +90,47 @@ func GetAllDataPelanggan(w http.ResponseWriter, r *http.Request) {
 	}
 	at.WriteJSON(w, http.StatusOK, pelanggans)
 }
+
+func GetOneDataPelanggan(w http.ResponseWriter, r *http.Request) {
+	// Auth
+	var respn model.Response
+	payload, err := watoken.Decode(config.PublicKeyWhatsAuth, at.GetLoginFromHeader(r))
+	if err != nil {
+		respn.Status = "Error : Token Tidak Valid "
+		respn.Info = at.GetSecretFromHeader(r)
+		respn.Location = "Decode Token Error: " + at.GetLoginFromHeader(r)
+		respn.Response = err.Error()
+		at.WriteJSON(w, http.StatusForbidden, respn)
+		return
+	}
+	_, err = atdb.GetOneDoc[model.Userdomyikado](config.Mongoconn, "user", primitive.M{"phonenumber": payload.Id})
+	if err != nil {
+		respn.Status = "Error : User tidak ada di database "
+		respn.Info = payload.Alias
+		respn.Location = payload.Id
+		respn.Response = err.Error()
+		at.WriteJSON(w, http.StatusNotFound, respn)
+		return
+	}
+	// Auth
+	// Parsing Body
+	var pelanggandata model.DataPelanggan
+	err = json.NewDecoder(r.Body).Decode(&pelanggandata)
+	if err != nil {
+		respn.Status = "Error : Parsing data pelanggan gagal"
+		respn.Info = payload.Alias
+		respn.Location = payload.Id
+		respn.Response = err.Error()
+		at.WriteJSON(w, http.StatusNotFound, respn)
+		return
+	}
+	//input database
+	datapelanggan, err := atdb.GetOneDoc[model.DataPelanggan](config.Mongoconn, "pelanggan", primitive.M{"_id": pelanggandata.ID})
+	if err != nil {
+		respn.Status = "Error : gagal input database"
+		respn.Response = err.Error()
+		at.WriteJSON(w, http.StatusNotFound, respn)
+		return
+	}
+	at.WriteJSON(w, http.StatusOK, datapelanggan)
+}
