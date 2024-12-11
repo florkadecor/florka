@@ -81,7 +81,7 @@ func GetAllDataPelanggan(w http.ResponseWriter, r *http.Request) {
 	}
 	// Auth
 	//input database
-	pelanggans, err := atdb.GetAllDoc[model.DataPelanggan](config.Mongoconn, "pelanggan", bson.M{})
+	pelanggans, err := atdb.GetAllDoc[[]model.DataPelanggan](config.Mongoconn, "pelanggan", bson.M{})
 	if err != nil {
 		respn.Status = "Error : gagal get database"
 		respn.Response = err.Error()
