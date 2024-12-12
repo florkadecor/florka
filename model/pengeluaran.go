@@ -7,7 +7,7 @@ type DataPengeluaran struct {
 	IDPelanggan primitive.ObjectID `json:"idpelanggan" bson:"idpelanggan"`    // Pelanggan ID as ObjectID
 	Jenis       string             `json:"jenis" bson:"jenis"`
 	Objek       string             `json:"objek" bson:"objek"`
-	Harga       string             `json:"harga" bson:"harga"`
+	Harga       float64            `json:"harga" bson:"harga"`
 	Keterangan  string             `json:"keterangan" bson:"keterangan"`
 	Tanggal     string             `json:"tanggal" bson:"tanggal"`
 }
