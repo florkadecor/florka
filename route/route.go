@@ -182,16 +182,17 @@ func URL(w http.ResponseWriter, r *http.Request) {
 		controller.VerifyPasswordHandler(w, r)
 	case method == "POST" && path == "/auth/resend":
 		controller.ResendPasswordHandler(w, r)
-		// Florka
+	// Florka
 	case method == "POST" && path == "/data/pelanggan":
 		controller.PostDataPelanggan(w, r)
 	case method == "GET" && path == "/data/pelanggan/all":
 		controller.GetAllDataPelanggan(w, r) //
 	case method == "GET" && at.URLParam(path, "/data/pelanggan/one/:id"):
 		controller.GetOneDataPelanggan(w, r)
-
 	case method == "POST" && path == "/data/pengeluaran":
 		controller.PostDataPengeluaran(w, r)
+	case method == "GET" && at.URLParam(path, "/data/pengeluaran/pelanggan/:id"):
+		controller.GetAllDataPengeluaran(w, r)
 	default:
 		controller.NotFound(w, r)
 	}
